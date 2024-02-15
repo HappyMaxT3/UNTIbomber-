@@ -171,7 +171,7 @@ int main(){
 
     int x, y, flag;
 
-    for(; num_of_choices > 0; --num_of_choices ){
+    while(num_of_choices > 0){
         cout << endl;
         cout << "enter coordinats x (num of column from left), y (num of line from up) and 0 or 1 (if you want to make mine-marker type 1, if you didn`t type 0): ";
         cin >> y >> x >> flag;
@@ -194,6 +194,7 @@ int main(){
             field_for_player[x][y] = 'F';
         }else{
             find_mines(field_for_player, &x, &y, field_inside, &field_size);
+            --num_of_choices;
         }
         
         cout << endl;
