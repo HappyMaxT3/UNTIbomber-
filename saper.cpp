@@ -22,9 +22,9 @@ int choose_level_func(){
     int count_asshole = 100;
 
     cout << BLUE << "choose difficulty level:" << RESET << endl;
-    cout << YELLOW << "   type '1' to easy mode" << RESET << endl;
-    cout << YELLOW << "   type '2' to middle mode" << RESET << endl;
-    cout << YELLOW << "   type '3' to hard mode" << RESET << endl;
+    cout << YELLOW << "   type '1' to easy mode (6*6 field and mines)" << RESET << endl;
+    cout << YELLOW << "   type '2' to middle mode (8*8 field and more mines)" << RESET << endl;
+    cout << YELLOW << "   type '3' to hard mode (14*14 field and extra mines)" << RESET << endl;
 
     cin >> button;
 
@@ -169,17 +169,17 @@ int main(){
     int num_of_choices = find_choices(field_inside, &field_size);
     cout << "\nchoices to win: " << num_of_choices << endl;
 
-    int x, y;
+    int x, y, flag;
 
     for(; num_of_choices > 0; --num_of_choices ){
         cout << endl;
-        cout << "enter coordinats x(num of column from left), y(num of line from up): ";
-        cin >> y >> x;
+        cout << "enter coordinats x (num of column from left), y (num of line from up) and 0 or 1 (if you want to make mine-marker type 1, if you didn`t type 0): ";
+        cin >> y >> x >> flag;
         x = x - 1;
         y = y - 1;
 
-        if(field_inside[x][y] == 'B'){
-            cout << "it`s bomb! you expoded, burned... you aren`t untibombman... you`re just trash..." << endl;
+        if(field_inside[x][y] == 'B' && flag == 0){
+            cout << "it`s bomb! you expoded, burned... you aren`t untibomber... you`re just a fool..." << endl;
             for(int i = 0; i < field_size; i++){
                 for(int j = 0; j < field_size; j++){
                     cout << RED << "[" << field_inside[i][j] << "]" << RESET;
@@ -190,7 +190,11 @@ int main(){
             break;
         }
 
-        find_mines(field_for_player, &x, &y, field_inside, &field_size);
+        if(flag == 1){
+            field_for_player[x][y] = 'F';
+        }else{
+            find_mines(field_for_player, &x, &y, field_inside, &field_size);
+        }
         
         cout << endl;
         for(int i = 0; i < field_size; i++){
@@ -200,11 +204,11 @@ int main(){
             cout << endl;
         }
         cout << "\nchoices to win: " << num_of_choices << endl;
+
     }
 
     if(num_of_choices == 0){
-        cout << "you win!" << endl;
+        cout << "my congratulations, you win, untibomber..." << endl;
     }
-
 
 }
